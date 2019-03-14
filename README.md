@@ -19,13 +19,13 @@ Important note: you want to return the results of this function call, not `conso
 
 ``` javascript
 function playRound(playerSelection, computerSelection) {
-	// your code here!
+    // your code here!
 }
 
-const playerSelection = 'rock'
-const computerSelection = computerPlay()
-console.log(playRound(playerSelection, computerSelection))
-​```
+const playerSelection = 'rock';
+const computerSelection = computerPlay();
+console.log(playRound(playerSelection, computerSelection));
+```
 
 [] Write a NEW function called game(). Use the previous function inside of this one to play a 5 round game that keeps score and reports a winner or loser at the end.
 At this point you should still just be using `console.log()` to display the results of each round and the winner at the end.
