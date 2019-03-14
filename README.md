@@ -6,6 +6,7 @@ from https://www.theodinproject.com/courses/web-development-101/lessons/rock-pap
 ### Instructions
 
 [x] Start a new git repo for your project.
+
 [x] Create a blank HTML document with a script tag. This game is going to be played completely from the console, so don’t worry about putting anything else in there.
 
 [] Your game is going to play against the computer, so begin with a function called computerPlay that will randomly return either ‘Rock’, ‘Paper’ or ‘Scissors’. We’ll use this function in the game to make the computer’s play.
@@ -14,7 +15,7 @@ from https://www.theodinproject.com/courses/web-development-101/lessons/rock-pap
 
 [] make your function case insensitive (so users can input rock, ROCK, RocK or any other variation)
 
-[em]Important note: you want to return the results of this function call, not `console.log()` them. To test this function `console.log` the results:[/em]
+Important note: you want to return the results of this function call, not `console.log()` them. To test this function `console.log` the results:
 
 ``` javascript
 function playRound(playerSelection, computerSelection) {
