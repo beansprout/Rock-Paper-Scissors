@@ -24,6 +24,7 @@ const showChoices = (playerSelection, computerSelection) => {
   if (checkRound() === 4) {
     roundId.style.display = 'none';
     finalWinner.style.color = 'red';
+    finalWinner.style.fontSize = '30px';
     finalWinner.style.display = 'none';
       if (playerScore === computerScore) {
         finalWinner.innerHTML = 'Tie Game - Everyone Wins!!';
@@ -179,6 +180,8 @@ const startOverClicked = () => {
   round = 0;
   playerScore = 0;
   computerScore = 0;
+  playerScoreText.innerHTML = `${playerScore}`;
+  computerScoreText.innerHTML = `${computerScore}`;
   showPlayerChoices();
 }
 
