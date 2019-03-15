@@ -19,23 +19,26 @@ let playerScore = 0;
 let computerScore = 0;
 let round = 0;
 
-const computerPlay = () => {
-  const randomChoice = Math.floor(Math.random() * 3);
-  return randomChoice < 1 ? 'rock' : randomChoice < 2 ? 'paper' : 'scissors';
-}
-
-const choose = (id) => {
-  computerChooses()
-  playerSelection = id;
-  showChoices(playerSelection, computerSelection);
-}
-
-const computerChooses = () => {
-  computerSelection = computerPlay();
-  return computerSelection;
-}
-
 const showChoices = (playerSelection, computerSelection) => {
+  checkRound();
+  if (checkRound() === 4) {
+    roundId.style.display = 'none';
+    finalWinner.style.color = 'red';
+    finalWinner.style.display = 'none';
+      if (playerScore === computerScore) {
+        finalWinner.innerHTML = 'Tie Game - Everyone Wins!!';
+      }
+      if (playerScore > computerScore) {
+        finalWinner.innerHTML = 'You win best out of 5. Computer is sad.';
+      }
+      if (playerScore < computerScore) {
+        finalWinner.innerHTML = 'Computer wins best out of 5!!! Computer Rejoices!';
+      }
+      setTimeout(() => {
+        finalWinner.style.display = 'block';
+        startOver();
+      }, 3000);
+    }
   revealChoice.style.display = 'block';
   choice.innerHTML = ` ${playerSelection}.`;
   setTimeout(() => {
@@ -47,7 +50,35 @@ const showChoices = (playerSelection, computerSelection) => {
   setTimeout(() => {
     playRound(playerSelection, computerSelection)
   }, 2000);
-  checkRound();
+}
+
+const computerChooses = () => {
+  computerSelection = computerPlay();
+  return computerSelection;
+}
+
+const choose = (id) => {
+  computerChooses()
+  hidePlayerChoices();
+  playerSelection = id;
+  showChoices(playerSelection, computerSelection);
+}
+
+const hidePlayerChoices = () => {
+  rock.style.display = 'none';
+  paper.style.display = 'none';
+  scissors.style.display = 'none';
+}
+
+const showPlayerChoices = () => {
+  rock.style.display = 'inline-block';
+  paper.style.display = 'inline-block';
+  scissors.style.display = 'inline-block';
+}
+
+const computerPlay = () => {
+  const randomChoice = Math.floor(Math.random() * 3);
+  return randomChoice < 1 ? 'rock' : randomChoice < 2 ? 'paper' : 'scissors';
 }
 
 playerScores = (x) => {
@@ -65,33 +96,18 @@ computerScores = (x) => {
 }
 
 const checkRound = () => {
-  if (round !== 5) {
+  if (round !== 4) {
     setTimeout(() => {
       again();
     }, 2500);
   }
-  if (round === 5) {
-    if (playerScore === computerScore) {
-      finalWinner.innerHTML = 'Tie Game - Everyone Wins!!';
-    }
-    if (playerScore > computerScore) {
-      finalWinner.innerHTML = 'You win best out of 5. Computer is sad.';
-    }
-    if (playerScore < computerScore) {
-      finalWinner.style.color = 'red';
-      finalWinner.innerHTML = 'Computer wins best out of 5!!! Computer Rejoices!';
-    }
-    setTimeout(() => {
-      finalWinner.style.display = 'block';
-      startOver();
-    }, 5000);
-  }
+  return round;
 }
 
 const playRound = (playerSelection, computerSelection) => {
   winner.style.display = 'block';
   roundId.style.display = 'block';
-  round = round + 1;
+    round = round + 1;
   roundNum.innerHTML = `${round}`;
   if (playerSelection === 'rock') {
     if (computerSelection  === 'rock') {
@@ -144,6 +160,7 @@ const againClicked = () => {
   revealComputerChoice.style.display = 'none';
   winner.style.display = 'none';
   againId.style.display='none';
+  showPlayerChoices();
 }
 
 // when 5 rounds have been played
@@ -160,6 +177,9 @@ const startOverClicked = () => {
   againId.style.display='none';
   finalWinner.style.display='none';
   round = 0;
+  playerScore = 0;
+  computerScore = 0;
+  showPlayerChoices();
 }
 
 
