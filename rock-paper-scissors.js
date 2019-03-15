@@ -6,9 +6,13 @@ const revealChoice = document.getElementById('revealchoice');
 const revealComputerChoice = document.getElementById('revealcomputerchoice');
 const computerChoice = document.getElementById('computerchoice');
 const winner = document.getElementById('winner');
+const finalWinner = document.getElementById('finalwinner');
 const startover = document.getElementById('startover');
+const againId = document.getElementById('again');
 const playerScoreText = document.getElementById('playerscore');
 const computerScoreText = document.getElementById('computerscore');
+const roundNum = document.getElementById('roundnum');
+const roundId = document.getElementById('round');
 let playerSelection;
 let computerSelection;
 let playerScore = 0;
@@ -43,31 +47,73 @@ const showChoices = (playerSelection, computerSelection) => {
   setTimeout(() => {
     playRound(playerSelection, computerSelection)
   }, 2000);
-  setTimeout(() => {
-    startOver();
-  }, 2500);
+  checkRound();
+}
 
+playerScores = (x) => {
+  // increase score by 1
+  playerScore = playerScore + 1;
+  //show score
+  playerScoreText.innerHTML = `${playerScore}`;
+}
+
+computerScores = (x) => {
+  // increase score by 1
+  computerScore = computerScore + 1;
+   //show score
+  computerScoreText.innerHTML = `${computerScore}`;
+}
+
+const checkRound = () => {
+  if (round !== 5) {
+    setTimeout(() => {
+      again();
+    }, 2500);
+  }
+  if (round === 5) {
+    if (playerScore === computerScore) {
+      finalWinner.innerHTML = 'Tie Game - Everyone Wins!!';
+    }
+    if (playerScore > computerScore) {
+      finalWinner.innerHTML = 'You win best out of 5. Computer is sad.';
+    }
+    if (playerScore < computerScore) {
+      finalWinner.style.color = 'red';
+      finalWinner.innerHTML = 'Computer wins best out of 5!!! Computer Rejoices!';
+    }
+    setTimeout(() => {
+      finalWinner.style.display = 'block';
+      startOver();
+    }, 5000);
+  }
 }
 
 const playRound = (playerSelection, computerSelection) => {
   winner.style.display = 'block';
+  roundId.style.display = 'block';
+  round = round + 1;
+  roundNum.innerHTML = `${round}`;
   if (playerSelection === 'rock') {
     if (computerSelection  === 'rock') {
       return winner.innerHTML='Tie';
     }
     if (computerSelection === 'scissors') {
-      return winner.innerHTML='Rock breaks scissors! You LOSE computer!'
+      playerScores(1);
+      return winner.innerHTML='Rock breaks scissors! Player gets the point.'
     }
     if (computerSelection === 'paper') {
-      return winner.innerHTML='Paper covers rock.  Waaaahhhhh!!! Computer Wins'
+      computerScores(1);
+      return winner.innerHTML='Paper covers rock.  Computer gets the point.'
     }
   }
   if (playerSelection === 'paper') {
     if (computerSelection  === 'rock') {
-      return winner.innerHTML='Paper covers rock!  You LOSE computer!';
+      playerScores(1);
+      return winner.innerHTML='Paper covers rock!  Player gets the point';
     }
     if (computerSelection === 'scissors') {
-      return winner.innerHTML='Scissors cuts paper.  Waaaahhhhh!!! Computer Wins'
+      computerScores(1);
+      return winner.innerHTML='Scissors cuts paper.  Computer gets the point.'
     }
     if (computerSelection === 'paper') {
       return winner.innerHTML='Tie'
@@ -75,15 +121,29 @@ const playRound = (playerSelection, computerSelection) => {
   }
   if (playerSelection === 'scissors') {
     if (computerSelection  === 'rock') {
-      return winner.innerHTML='Rock breaks scissors.  Waaaahhhhh!!! Computer Wins';
+      computerScores(1);
+      return winner.innerHTML='Rock breaks scissors.  Computer gets the point.';
     }
     if (computerSelection === 'scissors') {
       return winner.innerHTML='Tie'
     }
     if (computerSelection === 'paper') {
-      return winner.innerHTML='Scissors cuts paper!  You LOSE computer!'
+      playerScores(1);
+      return winner.innerHTML='Scissors cuts paper!  Player gets the point.'
     }
   }
+}
+
+const again = () => {
+  againId.style.display='block';
+}
+
+const againClicked = () => {
+  startover.style.display='none';
+  revealChoice.style.display = 'none';
+  revealComputerChoice.style.display = 'none';
+  winner.style.display = 'none';
+  againId.style.display='none';
 }
 
 // when 5 rounds have been played
@@ -96,6 +156,10 @@ const startOverClicked = () => {
   revealChoice.style.display = 'none';
   revealComputerChoice.style.display = 'none';
   winner.style.display = 'none';
+  roundId.style.display = 'none';
+  againId.style.display='none';
+  finalWinner.style.display='none';
+  round = 0;
 }
 
 
